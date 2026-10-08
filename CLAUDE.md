@@ -22,11 +22,17 @@ vitrine quando o produto for oferecido a lojas de terceiros.
 - Astro 5 estático, sem framework de UI. CSS próprio em `src/styles/global.css`.
 - **Todo texto fica em `src/data/site.ts`**, nos dicionários `t.pt` e `t.en`.
   As páginas não têm texto solto. Para mudar copy, mude ali.
-- Páginas: `/` (PT), `/en` (EN), `/privacidade`. Layout `Home.astro` monta a
+- Páginas: `/` (PT), `/en` (EN), `/privacidade`. Seções da home: hero, módulos,
+  loja completa (criação de loja nova em Shopify/Nuvemshop), em produção, para
+  quem, empresa, contato. Layout `Home.astro` monta a
   home a partir do dicionário; `Base.astro` tem head, header, footer.
-- Identidade: papel claro, tinta escura, acento índigo `--laco`. Fontes
-  Newsreader (display) e Inter (UI). Não reaproveitar cores da Cestas Company
-  nem da Brazilian Florist.
+- Identidade: a do Claude Design (ago/2026, `Downloads\Sistema Laços – Identidade
+  Visual*` e `Site Laços para Revisão.zip`): fundo quase branco, tinta #111114,
+  gradiente da marca #3E6BFF → #7B2FF2 → #FF3DBE usado com parcimônia (wordmark,
+  CTAs, números), acento teal/menta. Poppins na página, Albert Sans só no
+  wordmark. Logos em `public/marca/` (símbolo flat e glow, assinatura escura).
+  O wordmark no header é HTML ("Sistema" + "Laços" em gradiente), não o SVG da
+  assinatura, porque o SVG usa `<text>` com fonte que não carrega em `<img>`.
 - Sem preços no site enquanto a tabela não estiver fechada.
 - IDs de rastreamento só por variável de ambiente (`PUBLIC_GA4_ID`). Sem o
   ID, nenhum script de terceiro carrega.
