@@ -1,0 +1,124 @@
+/*
+  Sistema visual — Sistema Laços
+  Papel claro, tinta escura e um único acento azul-índigo (o "laço").
+  Tema único e claro, de propósito: toda cor é pintada explicitamente.
+*/
+
+:root {
+  --papel: #FAFAF7;
+  --papel-2: #F1F1EB;
+  --papel-3: #E6E6DD;
+  --tinta: #16211E;
+  --tinta-2: #3F4A46;
+  --tinta-3: #6E7874;
+  --laco: #2D3F7B;
+  --laco-claro: #5B6FB5;
+  --laco-lavado: #E6EAF6;
+  --linha: #DCDCD2;
+  --linha-suave: #EAEAE2;
+
+  --display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --corpo: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --col: min(68ch, 100%);
+  --largo: min(1120px, 100%);
+  --pad: clamp(20px, 5vw, 48px);
+  --raio: 6px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--corpo);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible { outline: 2px solid var(--laco); outline-offset: 3px; border-radius: 2px; }
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.12;
+  text-wrap: balance;
+  margin: 0;
+  color: var(--tinta);
+}
+h1 { font-size: clamp(36px, 6.2vw, 60px); letter-spacing: -.012em; }
+h2 { font-size: clamp(28px, 4.2vw, 40px); letter-spacing: -.008em; }
+h3 { font-size: clamp(20px, 2.6vw, 24px); }
+h4 { font-family: var(--corpo); font-weight: 600; font-size: 16px; line-height: 1.4; margin: 0; }
+p { margin: 0; }
+
+a { color: var(--laco); text-underline-offset: 3px; }
+strong { font-weight: 600; color: var(--tinta); }
+img { max-width: 100%; height: auto; display: block; }
+
+.olho {
+  font-family: var(--corpo);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--laco);
+  display: block;
+  margin-bottom: 14px;
+}
+
+.pular {
+  position: absolute; left: -9999px; top: 8px;
+  background: var(--tinta); color: #fff; padding: 8px 12px; border-radius: var(--raio);
+}
+.pular:focus { left: 8px; z-index: 100; }
+
+.secao { width: var(--largo); margin: 0 auto; padding: clamp(56px, 9vw, 112px) var(--pad); }
+.secao + .secao { border-top: 1px solid var(--linha-suave); }
+.secao--cheia { width: 100%; }
+.secao--cheia > .interno { width: var(--largo); margin: 0 auto; padding: 0 var(--pad); }
+
+.texto { max-width: var(--col); color: var(--tinta-2); font-size: 18px; }
+.texto + .texto { margin-top: 16px; }
+.pequeno { font-size: 14px; line-height: 1.55; }
+.suave { color: var(--tinta-3); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 24px; border-radius: 999px;
+  font-family: var(--corpo); font-size: 15px; font-weight: 600; letter-spacing: .01em;
+  text-decoration: none; border: 1px solid transparent; cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.btn--laco { background: var(--laco); color: #fff; }
+.btn--laco:hover { background: var(--laco-claro); }
+.btn--linha { background: transparent; color: var(--tinta); border-color: var(--linha); }
+.btn--linha:hover { border-color: var(--tinta); }
+
+.grade { display: grid; gap: 20px; }
+.grade--2 { grid-template-columns: repeat(2, 1fr); }
+.grade--3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 900px) { .grade--3 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .grade--2, .grade--3 { grid-template-columns: 1fr; } }
+
+.cartao {
+  background: #fff; border: 1px solid var(--linha); border-radius: var(--raio);
+  padding: 28px 26px; display: flex; flex-direction: column; gap: 10px;
+}
+.cartao h3 { font-size: 22px; }
+.cartao p { color: var(--tinta-2); font-size: 16px; }
+.cartao .marcador {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--laco-lavado); color: var(--laco);
+  display: grid; place-items: center;
+  font-family: var(--display); font-size: 18px; margin-bottom: 6px;
+}

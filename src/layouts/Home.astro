@@ -1,0 +1,106 @@
+---
+import Base from './Base.astro';
+import { site, t, type Lang } from '../data/site';
+
+interface Props { lang: Lang; caminho: string; }
+const { lang, caminho } = Astro.props;
+const tx = t[lang];
+---
+
+<Base lang={lang} titulo={tx.titulo} descricao={tx.descricao} caminho={caminho}>
+
+  <section class="hero secao">
+    <span class="olho">{tx.heroOlho}</span>
+    <h1>{tx.heroTitulo}</h1>
+    <p class="texto hero-texto">{tx.heroTexto}</p>
+    <div class="hero-acoes">
+      <a class="btn btn--laco" href={`mailto:${site.email}`} data-contato="hero">{tx.heroCta}</a>
+      <a class="btn btn--linha" href="#modulos">{tx.heroCtaSec}</a>
+    </div>
+  </section>
+
+  <section class="secao" id="modulos">
+    <span class="olho">{tx.modulosOlho}</span>
+    <h2>{tx.modulosTitulo}</h2>
+    <div class="grade grade--2 modulos">
+      {tx.modulos.map((m, i) => (
+        <article class="cartao">
+          <span class="marcador" aria-hidden="true">{i + 1}</span>
+          <h3>{m.titulo}</h3>
+          <p>{m.texto}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="secao--cheia producao" id="producao">
+    <div class="interno secao">
+      <span class="olho">{tx.producaoOlho}</span>
+      <h2>{tx.producaoTitulo}</h2>
+      <p class="texto">{tx.producaoTexto}</p>
+      <ul class="numeros" role="list">
+        {tx.producaoItens.map((n) => (
+          <li><b>{n.numero}</b><span>{n.rotulo}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao" id="para-quem">
+    <span class="olho">{tx.paraQuemOlho}</span>
+    <h2>{tx.paraQuemTitulo}</h2>
+    <div class="grade grade--3 para-quem">
+      {tx.paraQuem.map((p) => (
+        <article class="cartao">
+          <h3>{p.titulo}</h3>
+          <p>{p.texto}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="secao" id="empresa">
+    <span class="olho">{tx.empresaOlho}</span>
+    <h2>{tx.empresaTitulo}</h2>
+    <p class="texto">{tx.empresaTexto}</p>
+  </section>
+
+  <section class="secao--cheia contato" id="contato">
+    <div class="interno secao">
+      <span class="olho">{tx.contatoOlho}</span>
+      <h2>{tx.contatoTitulo}</h2>
+      <p class="texto">{tx.contatoTexto}</p>
+      <p class="contato-acoes">
+        <a class="btn btn--laco" href={`mailto:${site.email}`} data-contato="secao-contato">{tx.contatoCta}</a>
+        <a class="contato-email" href={`mailto:${site.email}`} data-contato="secao-contato-link">{site.email}</a>
+      </p>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+  .hero { padding-top: clamp(64px, 11vw, 140px); }
+  .hero h1 { max-width: 20ch; }
+  .hero-texto { margin-top: 22px; font-size: 19px; }
+  .hero-acoes { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .modulos, .para-quem { margin-top: 36px; }
+
+  .producao { background: var(--tinta); color: var(--papel); }
+  .producao h2, .producao .texto { color: var(--papel); }
+  .producao .texto { color: #C9CFCC; }
+  .producao .olho { color: var(--laco-claro); }
+  .numeros {
+    list-style: none; margin: 40px 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(3, auto); gap: 32px 56px; justify-content: start;
+  }
+  @media (max-width: 640px) { .numeros { grid-template-columns: 1fr; gap: 20px; } }
+  .numeros li { display: flex; flex-direction: column; gap: 4px; }
+  .numeros b { font-family: var(--display); font-weight: 400; font-size: clamp(40px, 6vw, 56px); line-height: 1; }
+  .numeros span { font-size: 14px; color: #C9CFCC; letter-spacing: .02em; }
+
+  .contato { background: var(--laco-lavado); }
+  .contato-acoes { margin-top: 28px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  .contato-email { font-size: 16px; }
+</style>

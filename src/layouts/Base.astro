@@ -1,0 +1,236 @@
+---
+import '../styles/global.css';
+import { site, t, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+  titulo: string;
+  descricao: string;
+  /** Caminho canônico, ex.: "/en". Use "/" na home. */
+  caminho: string;
+}
+
+const { lang, titulo, descricao, caminho } = Astro.props;
+const tx = t[lang];
+const canonical = new URL(caminho, Astro.site).href;
+const alternatePt = new URL('/', Astro.site).href;
+const alternateEn = new URL('/en', Astro.site).href;
+
+// IDs de rastreamento — definidos como variáveis de ambiente no deploy.
+// Sem eles, nenhum script de terceiro é carregado.
+const GA4 = import.meta.env.PUBLIC_GA4_ID;
+
+const organizacao = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.nome,
+  legalName: site.razaoSocial,
+  url: site.url,
+  email: site.email,
+  foundingDate: String(site.fundacao),
+  address: { '@type': 'PostalAddress', addressLocality: site.cidade, addressRegion: site.uf, addressCountry: 'BR' },
+};
+
+const secoes = [
+  { href: '#modulos', texto: tx.nav.modulos },
+  { href: '#producao', texto: tx.nav.producao },
+  { href: '#para-quem', texto: tx.nav.paraQuem },
+  { href: '#empresa', texto: tx.nav.empresa },
+  { href: '#contato', texto: tx.nav.contato },
+];
+const base = lang === 'en' ? '/en' : '/';
+---
+
+<!DOCTYPE html>
+<html lang={tx.lang}>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{titulo}</title>
+<meta name="description" content={descricao} />
+<link rel="canonical" href={canonical} />
+<link rel="alternate" hreflang="pt-BR" href={alternatePt} />
+<link rel="alternate" hreflang="en" href={alternateEn} />
+<link rel="alternate" hreflang="x-default" href={alternatePt} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={titulo} />
+<meta property="og:description" content={descricao} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content={lang === 'en' ? 'en_US' : 'pt_BR'} />
+<meta name="theme-color" content="#FAFAF7" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500;600&display=swap"
+/>
+
+<script type="application/ld+json" set:html={JSON.stringify(organizacao)} />
+
+{
+  GA4 && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4}`} />
+      <script is:inline define:vars={{ GA4 }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA4);
+      </script>
+    </>
+  )
+}
+</head>
+<body>
+
+<a class="pular" href="#conteudo">{lang === 'en' ? 'Skip to content' : 'Pular para o conteúdo'}</a>
+
+<header class="topo">
+  <div class="topo-interno">
+    <a class="marca" href={base} aria-label={`${site.nome} — ${lang === 'en' ? 'home' : 'início'}`}>
+      <span class="marca-laco" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 16c-4-7-12-7-12-1s8 7 12 1Zm0 0c4-7 12-7 12-1s-8 7-12 1Z" />
+          <path d="M16 16l-5 11M16 16l5 11" />
+        </svg>
+      </span>
+      <span class="marca-nome"><b>Sistema Laços</b></span>
+    </a>
+    <nav class="nav-desk" aria-label={lang === 'en' ? 'Main' : 'Principal'}>
+      {secoes.map((l) => <a href={l.href}>{l.texto}</a>)}
+      <a class="idioma" href={tx.trocarIdioma.href} lang={lang === 'en' ? 'pt-BR' : 'en'}>{tx.trocarIdioma.rotulo}</a>
+    </nav>
+    <a class="btn btn--laco topo-cta" href={`mailto:${site.email}`} data-contato="topo">{tx.heroCta}</a>
+    <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="menu-movel" aria-label="Menu">
+      <span class="barrinhas" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+  </div>
+  <nav class="menu-movel" id="menu-movel" aria-label="Menu" hidden>
+    <ul>
+      {secoes.map((l) => <li><a href={l.href}>{l.texto}</a></li>)}
+      <li><a href={tx.trocarIdioma.href}>{tx.trocarIdioma.rotulo}</a></li>
+    </ul>
+    <a class="btn btn--laco" href={`mailto:${site.email}`} data-contato="menu-movel">{tx.heroCta}</a>
+  </nav>
+</header>
+
+<main id="conteudo">
+  <slot />
+</main>
+
+<footer class="rodape">
+  <div class="rodape-interno">
+    <div class="rodape-bloco">
+      <p class="pequeno"><strong>{site.nome}</strong></p>
+      <p class="pequeno suave">{tx.rodapeLinha}</p>
+    </div>
+    <div class="rodape-bloco">
+      <h4>{tx.nav.contato}</h4>
+      <a class="pequeno" href={`mailto:${site.email}`} data-contato="rodape">{site.email}</a>
+      <a class="pequeno" href={tx.privacidade.href}>{tx.privacidade.rotulo}</a>
+    </div>
+    <div class="rodape-bloco">
+      <h4>{tx.nav.empresa}</h4>
+      <p class="pequeno suave">{tx.rodapeEmpresa}</p>
+    </div>
+  </div>
+  <div class="rodape-fim">
+    <p class="pequeno suave">© {new Date().getFullYear()} {site.razaoSocial}.</p>
+  </div>
+</footer>
+
+<script is:inline>
+  (function () {
+    function evento(nome, extra) {
+      var dados = Object.assign({ pagina: location.pathname }, extra || {});
+      if (window.gtag) window.gtag('event', nome, dados);
+    }
+    var botao = document.getElementById('menu-btn');
+    var painel = document.getElementById('menu-movel');
+    if (botao && painel) {
+      var fechar = function () {
+        painel.hidden = true;
+        botao.setAttribute('aria-expanded', 'false');
+      };
+      botao.addEventListener('click', function () {
+        if (botao.getAttribute('aria-expanded') === 'true') { fechar(); return; }
+        painel.hidden = false;
+        botao.setAttribute('aria-expanded', 'true');
+      });
+      painel.addEventListener('click', function (e) { if (e.target.closest('a')) fechar(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !painel.hidden) { fechar(); botao.focus(); } });
+      window.addEventListener('resize', function () { if (window.innerWidth > 900 && !painel.hidden) fechar(); });
+    }
+    document.addEventListener('click', function (e) {
+      var alvo = e.target.closest('[data-contato]');
+      if (alvo) evento('clique_contato', { origem: alvo.getAttribute('data-contato') });
+    });
+  })();
+</script>
+
+</body>
+</html>
+
+<style>
+  .topo {
+    position: sticky; top: 0; z-index: 30;
+    background: rgba(250, 250, 247, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--linha-suave);
+  }
+  .topo-interno {
+    width: var(--largo); margin: 0 auto; padding: 12px var(--pad);
+    display: flex; align-items: center; gap: 20px;
+  }
+  .marca { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--tinta); }
+  .marca-laco { color: var(--laco); display: grid; place-items: center; }
+  .marca-nome b { font-family: var(--display); font-weight: 500; font-size: 20px; letter-spacing: .01em; }
+
+  .nav-desk { display: flex; gap: 22px; margin-left: auto; align-items: center; }
+  .nav-desk a { color: var(--tinta-2); text-decoration: none; font-size: 15px; }
+  .nav-desk a:hover { color: var(--laco); }
+  .nav-desk .idioma { color: var(--tinta-3); font-size: 13px; letter-spacing: .04em; }
+  .topo-cta { padding: 10px 18px; font-size: 14px; }
+
+  .menu-btn {
+    display: none; background: transparent; border: 1px solid var(--linha); border-radius: 50%;
+    width: 44px; height: 44px; place-items: center; cursor: pointer; flex: none; padding: 0;
+  }
+  .barrinhas { position: relative; width: 20px; height: 14px; display: block; }
+  .barrinhas i { position: absolute; left: 0; right: 0; height: 1.5px; background: var(--tinta); border-radius: 2px; transition: transform .2s ease, opacity .15s ease; }
+  .barrinhas i:nth-child(1) { top: 0; }
+  .barrinhas i:nth-child(2) { top: 50%; margin-top: -.75px; }
+  .barrinhas i:nth-child(3) { bottom: 0; }
+  .menu-btn[aria-expanded="true"] .barrinhas i:nth-child(1) { transform: translateY(6.25px) rotate(45deg); }
+  .menu-btn[aria-expanded="true"] .barrinhas i:nth-child(2) { opacity: 0; }
+  .menu-btn[aria-expanded="true"] .barrinhas i:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
+
+  .menu-movel {
+    border-top: 1px solid var(--linha); background: var(--papel);
+    padding: 10px var(--pad) 22px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .menu-movel[hidden] { display: none; }
+  .menu-movel ul { list-style: none; margin: 0; padding: 0; }
+  .menu-movel li + li { border-top: 1px solid var(--linha-suave); }
+  .menu-movel a:not(.btn) { display: block; padding: 14px 2px; font-size: 18px; color: var(--tinta); text-decoration: none; }
+  .menu-movel .btn { width: 100%; }
+
+  @media (max-width: 900px) {
+    .nav-desk { display: none; }
+    .menu-btn { display: grid; margin-left: auto; }
+  }
+  @media (max-width: 760px) { .topo-cta { display: none; } }
+  @media (min-width: 901px) { .menu-movel { display: none; } }
+
+  .rodape { background: var(--papel-2); border-top: 1px solid var(--linha); }
+  .rodape-interno {
+    width: var(--largo); margin: 0 auto; padding: clamp(40px, 6vw, 64px) var(--pad) 32px;
+    display: grid; grid-template-columns: 1.2fr 1fr 1.4fr; gap: 32px;
+  }
+  @media (max-width: 720px) { .rodape-interno { grid-template-columns: 1fr; } }
+  .rodape-bloco { display: flex; flex-direction: column; gap: 7px; align-items: flex-start; }
+  .rodape-fim { width: var(--largo); margin: 0 auto; padding: 20px var(--pad) 32px; border-top: 1px solid var(--linha); }
+</style>

@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  lang="pt"
+  titulo="Privacidade — Sistema Laços"
+  descricao="Como o site lacos.tec.br trata os dados de quem o visita."
+  caminho="/privacidade"
+>
+  <section class="secao">
+    <span class="olho">Privacidade</span>
+    <h1>Política de privacidade</h1>
+    <p class="texto" style="margin-top: 22px;">
+      Este site é institucional e não possui formulários nem área de cadastro. O único dado que você
+      nos envia é o que escrever por e-mail para {site.email}, usado exclusivamente para responder ao
+      seu contato.
+    </p>
+    <p class="texto">
+      Usamos medição de audiência agregada para saber quantas pessoas visitam o site e de onde vêm.
+      Nenhum dado pessoal é vendido ou compartilhado com terceiros para fins de marketing.
+    </p>
+    <p class="texto">
+      Os módulos do Sistema Laços instalados em lojas de clientes seguem a política de privacidade de
+      cada loja, que é a controladora dos dados dos seus compradores. A Lacos Sistemas e Tecnologia
+      Ltda atua como operadora desses dados, nos termos da Lei Geral de Proteção de Dados
+      (Lei 13.709/2018).
+    </p>
+    <p class="texto">
+      Dúvidas ou pedidos sobre dados pessoais: <a href={`mailto:${site.email}`}>{site.email}</a>.
+    </p>
+    <p class="texto suave pequeno">Última atualização: outubro de 2026.</p>
+  </section>
+</Base>
