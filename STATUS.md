@@ -18,10 +18,10 @@
   Catch-all desligado.
 
 **Pendente**
-1. Douglas testar: mandar um e-mail para contato@lacos.tec.br e conferir no Gmail.
-2. Gmail → "Enviar e-mail como" douglas@lacos.tec.br (senha de app, tarefa do Douglas).
-3. Douglas aprovar o texto (`src/data/site.ts`) e confirmar os números da
-   seção "Em produção" (3 marcas, 5 lojas, 20+ anos); então tornar o repo público.
-4. Conta no Claude Console com douglas@lacos.tec.br e aplicação ao Claude
+1. Conta no Claude Console com douglas@lacos.tec.br e aplicação ao Claude
    Startups (plano em `OneDrive\CLAUDE\lacos\CLAUDE_STARTUPS_APLICACAO.md`).
-5. Opcional: GA4 (`PUBLIC_GA4_ID` no Pages), religar DNSSEC na Cloudflare.
+2. Opcional: incluir `include:_spf.google.com` no SPF da lacos.tec.br (envio
+   pelo Gmail "enviar como"), GA4 (`PUBLIC_GA4_ID` no Pages), religar DNSSEC.
+
+**Concluído em 08/10 (tarde):** roteamento testado (e-mail de terceiro chegou em
+douglas@), "enviar como" configurado pelo Douglas, repo tornado PÚBLICO.
