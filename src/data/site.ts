@@ -16,31 +16,32 @@ export type Lang = 'pt' | 'en';
 export const t = {
   pt: {
     lang: 'pt-BR',
-    titulo: 'Sistema Laços — software para lojas de flores e presentes',
+    titulo: 'Sistema Laços — software e lojas online para flores e presentes',
     descricao:
-      'Agendamento de entrega, personalização de presente, atendimento com IA e painel de operação para lojas de flores e cestas em Shopify e Nuvemshop.',
-    nav: { modulos: 'Módulos', producao: 'Em produção', paraQuem: 'Para quem', empresa: 'Empresa', contato: 'Contato' },
+      'Módulos de agendamento de entrega, presente, atendimento com IA e painel de operação para lojas em Shopify e Nuvemshop. Ou a loja completa, pronta para vender.',
+    nav: { modulos: 'Módulos', lojasNovas: 'Loja completa', producao: 'Em produção', paraQuem: 'Para quem', empresa: 'Empresa', contato: 'Contato' },
     trocarIdioma: { href: '/en', rotulo: 'English' },
 
-    heroOlho: 'Software para flores e presentes',
-    heroTitulo: 'Software para lojas de flores e presentes que entregam no mesmo dia.',
+    heroOlho: 'Flores, cestas e presentes',
+    heroTitulo: 'Sua loja de flores e presentes vendendo online, <span class="grad-texto">com entrega no mesmo dia.</span>',
     heroTexto:
-      'Agendamento de entrega, personalização de presente e atendimento com inteligência artificial para lojas em Shopify e Nuvemshop. Feito por quem opera uma rede de floriculturas há mais de vinte anos.',
+      'Módulos para quem já vende em Shopify ou Nuvemshop, e a loja completa para quem está começando. Feito por quem opera uma rede de floriculturas há mais de vinte anos.',
     heroCta: 'Falar com a gente',
     heroCtaSec: 'Ver os módulos',
 
     modulosOlho: 'Módulos',
-    modulosTitulo: 'O que a loja ganha',
+    modulosTitulo: 'O que a sua loja ganha',
+    modulosTexto: 'Instalam na loja que você já tem, em Shopify ou Nuvemshop. Cada um resolve um problema que aparece no balcão todo dia.',
     modulos: [
       {
         titulo: 'Agendamento de entrega',
         texto:
-          'Seletor de data e horário na página do produto, com taxa calculada pelo CEP, faixas por distância, horário de corte e datas bloqueadas. A loja só aceita o pedido que consegue entregar.',
+          'Data e horário escolhidos na página do produto, com taxa calculada pelo CEP, faixas por distância, horário de corte e datas bloqueadas. A loja só aceita o pedido que consegue entregar.',
       },
       {
         titulo: 'Presente',
         texto:
-          'Mensagem do cartão, escolha do cartão, complementos como chocolate, vinho e balão, e tudo isso vai junto no pedido, sem retrabalho no atendimento.',
+          'Mensagem do cartão, escolha do cartão e complementos como chocolate, vinho e balão. Tudo viaja junto no pedido, sem retrabalho no atendimento.',
       },
       {
         titulo: 'Atendente com IA',
@@ -51,6 +52,30 @@ export const t = {
         titulo: 'Painel de operação',
         texto:
           'Pedidos do dia, produção, impressão, rotas de entrega e repasse para floriculturas parceiras em outras cidades, com status compartilhado com o cliente.',
+      },
+    ],
+
+    lojasOlho: 'Loja completa',
+    lojasTitulo: 'Ainda não vende online? Entregamos a loja pronta.',
+    lojasTexto:
+      'Criamos a sua loja do zero em Shopify ou Nuvemshop: tema, produtos cadastrados com foto e descrição, frete e pagamentos configurados e os módulos já integrados. Você recebe a loja vendendo, não um projeto para terminar.',
+    lojasCta: 'Quero minha loja',
+    lojasPassos: [
+      {
+        titulo: 'Plataforma e tema',
+        texto: 'Escolhemos com você entre Shopify e Nuvemshop e montamos a loja com o modelo que já roda nas nossas lojas.',
+      },
+      {
+        titulo: 'Catálogo e configurações',
+        texto: 'Cadastramos produtos, variações, coleções, frete por região, formas de pagamento, e-mails e domínio.',
+      },
+      {
+        titulo: 'Módulos integrados',
+        texto: 'Agendamento de entrega, presente, atendente com IA e painel de operação já ligados no dia da entrega.',
+      },
+      {
+        titulo: 'Treinamento e acompanhamento',
+        texto: 'Sua equipe aprende a operar e nós seguimos junto nas primeiras semanas de venda.',
       },
     ],
 
@@ -65,11 +90,15 @@ export const t = {
     ],
 
     paraQuemOlho: 'Para quem',
-    paraQuemTitulo: 'Floriculturas e lojas de cestas que vendem online',
+    paraQuemTitulo: 'Floriculturas e lojas de cestas, com ou sem site',
     paraQuem: [
       {
-        titulo: 'Loja própria em Shopify ou Nuvemshop',
-        texto: 'Instala os módulos na sua loja e passa a vender com data de entrega, presente e atendimento automatizado.',
+        titulo: 'Quem já vende em Shopify ou Nuvemshop',
+        texto: 'Instala os módulos na loja que já tem e passa a vender com data de entrega, presente e atendimento automatizado.',
+      },
+      {
+        titulo: 'Quem ainda não vende online',
+        texto: 'Recebe a loja completa, com produtos, configurações e módulos integrados, pronta para o primeiro pedido.',
       },
       {
         titulo: 'Floricultura parceira de cidade',
@@ -91,37 +120,38 @@ export const t = {
     contatoTexto: 'Escreva para a gente. Respondemos em até um dia útil.',
     contatoCta: 'Enviar e-mail',
 
-    rodapeLinha: 'Software para lojas de flores e presentes.',
+    rodapeLinha: 'Software e lojas online para flores e presentes.',
     rodapeEmpresa: 'Lacos Sistemas e Tecnologia Ltda · CNPJ 68.907.014/0001-27 · São Paulo, SP',
     privacidade: { href: '/privacidade', rotulo: 'Privacidade' },
   },
   en: {
     lang: 'en',
-    titulo: 'Sistema Laços — software for flower and gift shops',
+    titulo: 'Sistema Laços — software and online stores for flower and gift shops',
     descricao:
-      'Delivery scheduling, gift personalization, AI customer service and an operations panel for flower and gift-basket shops on Shopify and Nuvemshop.',
-    nav: { modulos: 'Modules', producao: 'In production', paraQuem: 'Who it is for', empresa: 'Company', contato: 'Contact' },
+      'Delivery scheduling, gifting, AI customer service and operations modules for shops on Shopify and Nuvemshop. Or the complete store, ready to sell.',
+    nav: { modulos: 'Modules', lojasNovas: 'Complete store', producao: 'In production', paraQuem: 'Who it is for', empresa: 'Company', contato: 'Contact' },
     trocarIdioma: { href: '/', rotulo: 'Português' },
 
-    heroOlho: 'Software for flowers and gifts',
-    heroTitulo: 'Software for flower and gift shops that deliver the same day.',
+    heroOlho: 'Flowers, baskets and gifts',
+    heroTitulo: 'Your flower and gift shop selling online, <span class="grad-texto">with same-day delivery.</span>',
     heroTexto:
-      'Delivery scheduling, gift personalization and AI-powered customer service for shops on Shopify and Nuvemshop. Built by people who have run a flower-delivery network for over twenty years.',
+      'Modules for shops already selling on Shopify or Nuvemshop, and the complete store for those just starting. Built by people who have run a flower-delivery network for over twenty years.',
     heroCta: 'Talk to us',
     heroCtaSec: 'See the modules',
 
     modulosOlho: 'Modules',
-    modulosTitulo: 'What the shop gets',
+    modulosTitulo: 'What your shop gets',
+    modulosTexto: 'They install on the store you already have, on Shopify or Nuvemshop. Each one solves a problem that shows up at the counter every day.',
     modulos: [
       {
         titulo: 'Delivery scheduling',
         texto:
-          'Date and time-slot picker on the product page, with fees computed from the postal code, distance bands, cut-off times and blocked dates. The shop only accepts orders it can deliver.',
+          'Date and time slot chosen on the product page, with fees computed from the postal code, distance bands, cut-off times and blocked dates. The shop only accepts orders it can deliver.',
       },
       {
         titulo: 'Gifting',
         texto:
-          'Card message, card choice and add-ons such as chocolate, wine and balloons, all travelling with the order so nothing is re-typed by the team.',
+          'Card message, card choice and add-ons such as chocolate, wine and balloons. Everything travels with the order, so nothing is re-typed by the team.',
       },
       {
         titulo: 'AI assistant',
@@ -132,6 +162,30 @@ export const t = {
         titulo: 'Operations panel',
         texto:
           'Orders of the day, production, printing, delivery routes and hand-off to partner florists in other cities, with status shared with the customer.',
+      },
+    ],
+
+    lojasOlho: 'Complete store',
+    lojasTitulo: 'Not selling online yet? We deliver the store ready.',
+    lojasTexto:
+      'We build your store from scratch on Shopify or Nuvemshop: theme, products with photos and descriptions, shipping and payments configured, and the modules already integrated. You receive a store that is selling, not a project to finish.',
+    lojasCta: 'I want my store',
+    lojasPassos: [
+      {
+        titulo: 'Platform and theme',
+        texto: 'We choose Shopify or Nuvemshop with you and set up the store on the model that already runs in our own shops.',
+      },
+      {
+        titulo: 'Catalogue and settings',
+        texto: 'We register products, variants, collections, shipping by region, payment methods, e-mails and domain.',
+      },
+      {
+        titulo: 'Integrated modules',
+        texto: 'Delivery scheduling, gifting, AI assistant and operations panel connected on delivery day.',
+      },
+      {
+        titulo: 'Training and follow-up',
+        texto: 'Your team learns to operate it and we stay alongside through the first weeks of sales.',
       },
     ],
 
@@ -146,11 +200,15 @@ export const t = {
     ],
 
     paraQuemOlho: 'Who it is for',
-    paraQuemTitulo: 'Florists and gift-basket shops that sell online',
+    paraQuemTitulo: 'Florists and gift-basket shops, with or without a website',
     paraQuem: [
       {
-        titulo: 'Your own Shopify or Nuvemshop store',
-        texto: 'Install the modules and start selling with delivery dates, gifting and automated customer service.',
+        titulo: 'Already selling on Shopify or Nuvemshop',
+        texto: 'Install the modules on the store you have and start selling with delivery dates, gifting and automated customer service.',
+      },
+      {
+        titulo: 'Not selling online yet',
+        texto: 'Receive the complete store, with products, settings and modules integrated, ready for the first order.',
       },
       {
         titulo: 'Partner florist in a city',
@@ -172,7 +230,7 @@ export const t = {
     contatoTexto: 'Write to us. We reply within one business day.',
     contatoCta: 'Send an e-mail',
 
-    rodapeLinha: 'Software for flower and gift shops.',
+    rodapeLinha: 'Software and online stores for flower and gift shops.',
     rodapeEmpresa: 'Lacos Sistemas e Tecnologia Ltda · CNPJ 68.907.014/0001-27 · São Paulo, Brazil',
     privacidade: { href: '/privacidade', rotulo: 'Privacy' },
   },

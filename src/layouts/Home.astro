@@ -5,27 +5,47 @@ import { site, t, type Lang } from '../data/site';
 interface Props { lang: Lang; caminho: string; }
 const { lang, caminho } = Astro.props;
 const tx = t[lang];
+
+// Ícones dos módulos (traço simples, cor da marca). Ordem = tx.modulos.
+const icones = [
+  // calendário
+  '<path d="M3 5h18v16H3z M3 9h18 M8 3v4 M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+  // presente
+  '<path d="M3 9h18v4H3z M5 13h14v8H5z M12 9v12 M12 9c-2-4-6-4-6-1s4 1 6 1Zm0 0c2-4 6-4 6-1s-4 1-6 1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+  // balão de conversa
+  '<path d="M4 5h16v11H9l-5 4z M8 9h8 M8 12h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+  // painel
+  '<path d="M3 4h18v16H3z M3 9h18 M9 9v11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+];
 ---
 
 <Base lang={lang} titulo={tx.titulo} descricao={tx.descricao} caminho={caminho}>
 
   <section class="hero secao">
-    <span class="olho">{tx.heroOlho}</span>
-    <h1>{tx.heroTitulo}</h1>
-    <p class="texto hero-texto">{tx.heroTexto}</p>
-    <div class="hero-acoes">
-      <a class="btn btn--laco" href={`mailto:${site.email}`} data-contato="hero">{tx.heroCta}</a>
-      <a class="btn btn--linha" href="#modulos">{tx.heroCtaSec}</a>
+    <div class="hero-texto-col">
+      <span class="badge">{tx.heroOlho}</span>
+      <h1 set:html={tx.heroTitulo} />
+      <p class="texto hero-texto">{tx.heroTexto}</p>
+      <div class="hero-acoes">
+        <a class="btn btn--grad" href={`mailto:${site.email}`} data-contato="hero">{tx.heroCta}</a>
+        <a class="btn btn--linha" href="#modulos">{tx.heroCtaSec}</a>
+      </div>
+    </div>
+    <div class="hero-simbolo" aria-hidden="true">
+      <img src="/marca/simbolo-glow.svg" alt="" width="352" height="268" loading="eager" />
     </div>
   </section>
 
   <section class="secao" id="modulos">
-    <span class="olho">{tx.modulosOlho}</span>
-    <h2>{tx.modulosTitulo}</h2>
-    <div class="grade grade--2 modulos">
+    <div class="secao-cabeca centro">
+      <span class="badge">{tx.modulosOlho}</span>
+      <h2>{tx.modulosTitulo}</h2>
+      <p class="texto">{tx.modulosTexto}</p>
+    </div>
+    <div class="grade grade--2">
       {tx.modulos.map((m, i) => (
         <article class="cartao">
-          <span class="marcador" aria-hidden="true">{i + 1}</span>
+          <span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24" class="grad-icone" set:html={icones[i]} /></span>
           <h3>{m.titulo}</h3>
           <p>{m.texto}</p>
         </article>
@@ -33,23 +53,47 @@ const tx = t[lang];
     </div>
   </section>
 
+  <section class="secao--cheia lojas-novas" id="lojas-novas">
+    <div class="interno">
+      <div class="lojas-grid">
+        <div>
+          <span class="badge">{tx.lojasOlho}</span>
+          <h2>{tx.lojasTitulo}</h2>
+          <p class="texto">{tx.lojasTexto}</p>
+          <p class="hero-acoes"><a class="btn btn--grad" href={`mailto:${site.email}`} data-contato="lojas-novas">{tx.lojasCta}</a></p>
+        </div>
+        <ol class="passos">
+          {tx.lojasPassos.map((p, i) => (
+            <li class="cartao">
+              <span class={`numero n${i + 1}`} aria-hidden="true">{i + 1}</span>
+              <h3>{p.titulo}</h3>
+              <p>{p.texto}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
   <section class="secao--cheia producao" id="producao">
-    <div class="interno secao">
-      <span class="olho">{tx.producaoOlho}</span>
+    <div class="interno">
+      <span class="badge badge--escuro">{tx.producaoOlho}</span>
       <h2>{tx.producaoTitulo}</h2>
       <p class="texto">{tx.producaoTexto}</p>
       <ul class="numeros" role="list">
         {tx.producaoItens.map((n) => (
-          <li><b>{n.numero}</b><span>{n.rotulo}</span></li>
+          <li><b class="grad-texto">{n.numero}</b><span>{n.rotulo}</span></li>
         ))}
       </ul>
     </div>
   </section>
 
   <section class="secao" id="para-quem">
-    <span class="olho">{tx.paraQuemOlho}</span>
-    <h2>{tx.paraQuemTitulo}</h2>
-    <div class="grade grade--3 para-quem">
+    <div class="secao-cabeca centro">
+      <span class="badge">{tx.paraQuemOlho}</span>
+      <h2>{tx.paraQuemTitulo}</h2>
+    </div>
+    <div class="grade grade--2">
       {tx.paraQuem.map((p) => (
         <article class="cartao">
           <h3>{p.titulo}</h3>
@@ -60,19 +104,20 @@ const tx = t[lang];
   </section>
 
   <section class="secao" id="empresa">
-    <span class="olho">{tx.empresaOlho}</span>
-    <h2>{tx.empresaTitulo}</h2>
-    <p class="texto">{tx.empresaTexto}</p>
+    <div class="secao-cabeca">
+      <span class="badge">{tx.empresaOlho}</span>
+      <h2>{tx.empresaTitulo}</h2>
+      <p class="texto">{tx.empresaTexto}</p>
+    </div>
   </section>
 
-  <section class="secao--cheia contato" id="contato">
-    <div class="interno secao">
-      <span class="olho">{tx.contatoOlho}</span>
+  <section class="secao" id="contato">
+    <div class="cta-final">
       <h2>{tx.contatoTitulo}</h2>
-      <p class="texto">{tx.contatoTexto}</p>
-      <p class="contato-acoes">
-        <a class="btn btn--laco" href={`mailto:${site.email}`} data-contato="secao-contato">{tx.contatoCta}</a>
-        <a class="contato-email" href={`mailto:${site.email}`} data-contato="secao-contato-link">{site.email}</a>
+      <p>{tx.contatoTexto}</p>
+      <p class="cta-acoes">
+        <a class="btn btn--branco" href={`mailto:${site.email}`} data-contato="cta-final">{tx.contatoCta}</a>
+        <a class="cta-email" href={`mailto:${site.email}`} data-contato="cta-final-link">{site.email}</a>
       </p>
     </div>
   </section>
@@ -80,27 +125,49 @@ const tx = t[lang];
 </Base>
 
 <style>
-  .hero { padding-top: clamp(64px, 11vw, 140px); }
-  .hero h1 { max-width: 20ch; }
-  .hero-texto { margin-top: 22px; font-size: 19px; }
-  .hero-acoes { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero {
+    padding-top: clamp(48px, 8vw, 96px);
+    display: flex; flex-wrap: wrap; align-items: center; gap: clamp(32px, 5vw, 72px);
+  }
+  .hero-texto-col { flex: 1 1 420px; }
+  .hero h1 { max-width: 18ch; }
+  .hero-texto { margin-top: 18px; font-size: clamp(16px, 1.6vw, 19px); }
+  .hero-acoes { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-simbolo { flex: 0 1 340px; display: grid; place-items: center; animation: flutuar 7s ease-in-out infinite; }
+  .hero-simbolo img { width: min(100%, 352px); height: auto; }
+  @keyframes flutuar { 50% { transform: translateY(-10px); } }
+  @media (max-width: 760px) { .hero-simbolo { flex-basis: 100%; order: -1; } .hero-simbolo img { width: 200px; } }
 
-  .modulos, .para-quem { margin-top: 36px; }
+  .grad-icone { color: var(--violeta); }
 
-  .producao { background: var(--tinta); color: var(--papel); }
-  .producao h2, .producao .texto { color: var(--papel); }
-  .producao .texto { color: #C9CFCC; }
-  .producao .olho { color: var(--laco-claro); }
+  .lojas-novas { background: var(--branco); border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); }
+  .lojas-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+  @media (max-width: 900px) { .lojas-grid { grid-template-columns: 1fr; } }
+  .passos { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .passos .cartao { background: linear-gradient(180deg, var(--fundo-2), var(--fundo)); }
+
+  .producao { background: var(--tinta); color: var(--escuro-texto); }
+  .producao h2 { color: #fff; }
+  .producao .texto { color: var(--escuro-texto); }
+  .badge--escuro { background: rgba(82, 245, 176, 0.12); border-color: rgba(82, 245, 176, 0.35); color: var(--menta); }
+  .badge--escuro::before { background: var(--menta); }
   .numeros {
     list-style: none; margin: 40px 0 0; padding: 0;
-    display: grid; grid-template-columns: repeat(3, auto); gap: 32px 56px; justify-content: start;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px;
   }
-  @media (max-width: 640px) { .numeros { grid-template-columns: 1fr; gap: 20px; } }
-  .numeros li { display: flex; flex-direction: column; gap: 4px; }
-  .numeros b { font-family: var(--display); font-weight: 400; font-size: clamp(40px, 6vw, 56px); line-height: 1; }
-  .numeros span { font-size: 14px; color: #C9CFCC; letter-spacing: .02em; }
+  .numeros li {
+    display: flex; flex-direction: column; gap: 4px;
+    background: #18161F; border: 1px solid #26242E; border-radius: var(--raio); padding: 22px 24px;
+  }
+  .numeros b { font-weight: 700; font-size: clamp(36px, 5vw, 48px); line-height: 1.05; letter-spacing: -.02em; }
+  .numeros span { font-size: 14px; color: var(--escuro-apagado); }
 
-  .contato { background: var(--laco-lavado); }
-  .contato-acoes { margin-top: 28px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-  .contato-email { font-size: 16px; }
+  .cta-final {
+    background: var(--grad-diag); color: #fff; border-radius: 24px;
+    padding: clamp(36px, 6vw, 64px); text-align: center;
+  }
+  .cta-final h2 { color: #fff; max-width: 20ch; margin: 0 auto; }
+  .cta-final > p { margin-top: 12px; opacity: .92; font-size: 17px; }
+  .cta-acoes { margin-top: 26px; display: flex; gap: 18px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .cta-email { color: #fff; font-weight: 500; }
 </style>
